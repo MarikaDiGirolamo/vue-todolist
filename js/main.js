@@ -3,37 +3,38 @@ const {createApp} = Vue;
 createApp({
     data(){
         return {
-            newTask: "",
-            inputError: false,
+            newTask: {
+                text: "",
+                status: false
+            },
             taskList: [
-                {text: "fare i compiti", done: false},
-                {text: "studiare", done: true},
-                {text: "esercitarsi a programmare", done: false}
+                {text: "studiare", status: true},
+                {text: "fare i compiti", status: false},
+                {text: "esercitarsi a programmare", status: false}
             ]
         }
     },
     methods: {
         addTask(){
-            if (this.newTask.lenght > 5){
-                this.inputError = false;
-
-                let newTask = {
-                    text: this.newTask,
-                    done: false
-                };
-                
-                this.taskList.unshift(newTask);
-                this.newTask ="";
-            } else {
-                this.inputError = true;
-            }
+            let newTaskToPush ={...this.newTask}
+            this.taskList.unshift(newTaskToPush);
+            this.newTask.text ="";
+        },
+        changeStatus(posizione){
+            this.taskList[posizione].status = !this.taskList[posizione].status;
         },
         removeTask(posizione){
             this.taskList.splice(posizione, 1);
         },
-        changeStatus(posizione){
-            this.taskList[posizione].done = !this.taskList[posizione].done;
-        },
+        getClass(i){
+            let classe ="";
+            if(this.taskList[i].status){
+                classe="done";
+            } else{
+                classe="notDone";
+            }
+            return classe;
+        }
         
     }
 }).mount('#app');
