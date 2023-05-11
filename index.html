@@ -12,18 +12,22 @@
     <body>
         <div id="app">
 
-            <input v-model="newTask" @keyUp.enter="addTask" type="text" placeholder="Write your task">
-            <button @click="addTask">Add Task</button>
+            <h1>ToDO List 🍓</h1>
 
-            <span v-show="inputError">Si è verificato un errore! Inserisci almeno 5 caratteri per continuare</span>
+            <input v-model="newTask.text" @keyUp.enter="addTask" type="text" placeholder="Write your task">
+            <button @click="addTask">Add Task</button>
+            <p v-if="true">{{taskList.length}}Elementi in Lista</p>
+
 
             <ul>
                 <li v-for="(task, i) in taskList">
-                {{task.text}} 
+                <span :class="getClass(i)">{{task.text}} </span>
                 <button @click="changeStatus(i)">CAMBIA STATO</button> 
                 <button  @click="removeTask(i)">RIMUOVI</button></li>
             </ul>
+            <p v-show="taskList.length < 1">Non sono presenti elementi da visualizzare</p>
         </div>
+
 
 
         <script src='https://unpkg.com/vue@3/dist/vue.global.js'></script>
